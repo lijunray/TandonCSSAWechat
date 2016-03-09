@@ -14,7 +14,7 @@ Class Entry{
 
     public static function Entry_select($content, $fromUserName){
         $content = strtolower($content);
-        if (substr($content, 0, 1) == 'x') {
+        if (substr($content, 0, 1) == '/x') {
             return "你的答案已经保存在服务器啦！请等待答案最终揭晓吧！";
         }
         if (substr($content, 0, 4) == "/hi,"){

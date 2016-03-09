@@ -44,7 +44,7 @@
 		{
 			//回复欢迎文字消息
 			$msgType = "text";
-			$contentStr = "感谢您关注Tandon CSSA公众平台！[愉快][玫瑰]";
+			$contentStr = "感谢您关注公众平台教程！[愉快]\n\n想学公众平台使用的朋友请输入“跟我学”！[玫瑰]";
 			$resultStr = sprintf($textTpl, $fromUsername, $toUsername, time(), $msgType, $contentStr);
 			echo $resultStr;
 			exit;

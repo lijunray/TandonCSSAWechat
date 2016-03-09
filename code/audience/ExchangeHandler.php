@@ -13,7 +13,7 @@ include_once $_SERVER['DOCUMENT_ROOT']."\code\util\Utility.php";
 class ExchangeHandler {
 
     public static function exchange ($openId) {
-        $userArray = MatchUtil::getArrayFromFile("/json/users.json");
+        $userArray = Utility::getArrayFromFile("/json/users.json");
         $senderIndex = MatchUtil::getSenderIndex($userArray, "openId", $openId);
         if ($senderIndex == -1) {
             return "还没输入你的微信号加编号怎么钓妹（汉）子你告诉我怎么钓！好吧好吧！给你举个栗子！╮(╯▽╰)╭ 像这样输入就行啦：\"cssa001B\" ";
@@ -38,8 +38,9 @@ class ExchangeHandler {
             return "O(∩_∩)O~~你已经同意交换联系方式了，然而TA还需要考虑...可能半个小时吧！再等等吧~~~";
         }
         elseif ($senderFlag == "1" && $matcherFlag == "2") {
-            MatchUtil::saveInputs($userArray, $senderIndex, $userArray[$senderIndex]['serialNumber'], $openId, "3");
-            MatchUtil::saveInputs($userArray, $matcherIndex, $userArray[$matcherIndex]['serialNumber'], $userArray[$matcherIndex]['openId'], "3");
+            $userArray[$senderIndex]['flag'] = "3";
+            $userArray[$matcherIndex]['flag'] = "3";
+            MatchUtil::save($userArray);
             return "羡慕ing...但是还是恭喜！你！们！都！同！意！交！换！联！系！方！式！啦！还不快加TA？" . $userArray[$matcherIndex]['wechat'];
         }
         elseif ($senderFlag == "2") {
@@ -50,4 +51,5 @@ class ExchangeHandler {
         }
 
     }
+
 }

@@ -34,7 +34,7 @@ class StatusHandler {
         elseif ($senderFlag == "1" && $matcherFlag == "1") {
             $matcher = $userArray[$matcherIndex];
             $matcherInfo = "Name: " . $matcher["userName"] . "\n" .
-                "Age: " . $matcher['age'] . "\n" .
+                "Birthday: " . $matcher['birthday'] . "\n" .
                 "University: " . $matcher['university'] . "\n" .
                 "Height: " . $matcher['height'] . "\n" .
                 "Weight: " . $matcher['weight'] . "\n" .

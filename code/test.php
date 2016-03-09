@@ -7,8 +7,8 @@
  */
 include_once("audience/MatcherEntry.php");
 include_once ("Entry.php");
-$openId = "11111asdqe";
-$userInput = "ray1001B";
+$openId = "1";
+$userInput = "status";
 $userInput = strtolower($userInput);
 
 echo Entry::Entry_select($userInput, $openId);

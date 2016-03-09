@@ -9,19 +9,10 @@ include_once("User.php");
 
 class MatchUtil {
 
-    public static function jsonToUsers ($jsonObj, $index) {
-        $array = json_decode($jsonObj, true);
-        $obj = $array[$index];
-        $user = new User($obj['openId'], $obj['orderNumber'], $obj['userName'], $obj['email'], $obj['gender'],
-            $obj['age'], $obj['university'], $obj['wechat'], $obj['height'], $obj['weight'], $obj['interest'],
-            $obj['personality'], $obj['input'], $obj['flag']);
-        return $user;
-    }
-
     public static function getMatcher ($userArray, $serialNumber) {
         $senderGender = $serialNumber[3];
         $senderNumber = substr($serialNumber, 0, 3);
-        $matcherGender = $senderGender == "B" ? "G" : "B" ;
+        $matcherGender = $senderGender == "b" ? "g" : "b" ;
         $matcherNumber = $senderNumber;
         $matcherSerialNumber = $matcherNumber . $matcherGender;
         $length = count($userArray);
@@ -47,7 +38,7 @@ class MatchUtil {
     public static function getSenderIndex ($userArray, $key, $value) {
         $length = count($userArray);
         for ($i = 0; $i < $length; $i++) {
-            if ($userArray[$i][$key] == $value) {
+            if (array_key_exists($key, $userArray[$i]) && $userArray[$i]["$key"] == $value) {
                 return $i;
             }
         }
@@ -57,8 +48,15 @@ class MatchUtil {
     public static function saveInputs($userArray, $senderIndex, $serialNumber, $openId, $flag) {
         $filePath = 'json/users.json';
         $userArray[$senderIndex]['serialNumber'] = $serialNumber;
-        $userArray[$senderIndex]['openId'] = $openId;
+        $jjj = json_encode($openId);
+        $qqq = json_decode($jjj, true);
+        $userArray[$senderIndex]['openId']=$qqq[0];
         $userArray[$senderIndex]['flag'] = $flag;
+        self::save($userArray);
+    }
+
+    public static function save ($userArray) {
+        $filePath = 'json/users.json';
         $jsonFromArray = json_encode($userArray);
         file_put_contents($filePath, $jsonFromArray, LOCK_EX);
     }
